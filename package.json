@@ -1,0 +1,27 @@
+{
+  "name": "bytepass",
+  "version": "1.0.0",
+  "description": "Open Source Password Manager",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:dev": "nodemon src/app.js",
+    "lint": "eslint ./src"
+  },
+  "keywords": [
+    "bytepass",
+    "password",
+    "password manager"
+  ],
+  "author": "Al Snake",
+  "license": "GPL-3",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.5.0",
+    "nodemon": "^2.0.15"
+  }
+}

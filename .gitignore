@@ -1,0 +1,16 @@
+# CONFIG
+.env
+config.json
+
+# Folders
+build
+.vscode
+node_modules
+
+# Others
+bytepass.qt.*
+*.expand
+*.bin
+*.o
+*.d
+*.a
