@@ -20,4 +20,11 @@ router.post(
 
 router.post('/logout', isAuth, AuthController.postLogout);
 
+router.post(
+	'/verify/email',
+	inputValidator.validate('email'),
+	inputValidator.errorHandler,
+	AuthController.postVerifyEmail
+);
+
 module.exports = router;

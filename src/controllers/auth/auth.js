@@ -1,4 +1,5 @@
 const AuthService = require('../../services/auth/auth');
+const VerifyService = require('../../services/auth/verify');
 const ROLE = require('../../helpers/role');
 
 exports.postRegister = async (req, res, next) => {
@@ -11,6 +12,8 @@ exports.postRegister = async (req, res, next) => {
 			username,
 			password
 		);
+
+		await VerifyService.sendEmailVerificationCode(email);
 
 		const userInfo = {
 			type: user.type,
@@ -47,4 +50,27 @@ exports.postLogin = async (req, res, next) => {
 exports.postLogout = (req, res, next) => {
 	res.clearCookie('Authorization');
 	res.status(200).json({ message: 'Successfully Logged Out' });
+};
+
+exports.postVerifyEmail = async (req, res, next) => {
+	const { email, code } = req.body;
+
+	try {
+		if (await VerifyService.isEmailVerified(email))
+			return res
+				.status(200)
+				.json({ message: 'User Email is Already Verified!' });
+
+		if (!code) {
+			await VerifyService.sendEmailVerificationCode(email);
+			return res
+				.status(200)
+				.json({ message: 'Verification Email has been Sent!' });
+		}
+
+		await VerifyService.verifyEmail(email, code);
+		res.status(200).json({ message: 'User Email has been verified' });
+	} catch (err) {
+		return next(err);
+	}
 };
