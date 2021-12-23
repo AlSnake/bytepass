@@ -6,6 +6,7 @@ config.json
 build
 .vscode
 node_modules
+logs
 
 # Others
 bytepass.qt.*
