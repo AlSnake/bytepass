@@ -35,6 +35,26 @@ exports.validate = (method) => {
 					}),
 			];
 		}
+		case 'account': {
+			return [
+				body('title', 'title must be between 1-32 Characters')
+					.exists()
+					.trim()
+					.isLength({ min: 1, max: 32 }),
+				body('url', 'Bad URL').exists().isURL().trim(),
+				body(
+					'user',
+					'username or email must be between 1-256 Characters'
+				)
+					.exists()
+					.trim()
+					.isLength({ min: 1, max: 256 }),
+				body('password', 'password must be between 1-256 Characters')
+					.exists()
+					.trim()
+					.isLength({ min: 1, max: 256 }),
+			];
+		}
 		case 'email': {
 			return body('email', 'Bad Email Address')
 				.exists()
@@ -79,35 +99,6 @@ exports.validate = (method) => {
 					minNumbers: 1,
 					minSymbols: 1,
 				});
-		}
-		case 'verifyEmail': {
-			return [
-				body('email', 'Bad Email Address')
-					.exists()
-					.trim()
-					.isLength({ max: 64 })
-					.isEmail()
-					.normalizeEmail(),
-				body('code', 'Bad Verification Code').exists().trim(),
-			];
-		}
-		case 'verifyPhoneNumber': {
-			return [
-				body(
-					'phoneNumber',
-					'Phone Number must be valid, and between 0-15 Characters & Must start with Country code. Example: +12023311285'
-				)
-					.exists()
-					.trim()
-					.isLength({ max: 15 })
-					.isMobilePhone(validator.isMobilePhoneLocales, {
-						strictMode: true,
-					}),
-				body('code', 'Bad Verification Code')
-					.exists()
-					.trim()
-					.isNumeric(),
-			];
 		}
 	}
 };

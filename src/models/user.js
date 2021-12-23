@@ -26,6 +26,12 @@ const userSchema = new mongoose.Schema(
 			required: true,
 			default: false,
 		},
+		accounts: [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+				ref: 'Account',
+			},
+		],
 		emailVerifyCode: String,
 		emailVerifyExpiry: Date,
 	},
